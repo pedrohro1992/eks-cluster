@@ -10,7 +10,9 @@ resource "aws_eks_cluster" "cluster" {
       aws_security_group.cluster_nodes_sg.id
     ]
     subnet_ids = [
-      aws_subnet.private[*].id
+      aws_subnet.private[0].id,
+      aws_subnet.private[1].id,
+      aws_subnet.private[2].id
     ]
   }
 

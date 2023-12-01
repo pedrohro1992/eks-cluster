@@ -1,3 +1,18 @@
+resource "tls_private_key" "eks" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "aws_key_pair" "generated_key" {
+  key_name = "${var.cluster_name}-key_name"
+
+  public_key = tls_private_key.eks.public_key_openssh
+  provisioner "local-exec" { # Create "myKey.pem" to your computer!!
+    command = "echo '${tls_private_key.eks.private_key_pem}' > ${var.cluster_name}.pem"
+  }
+}
+
+
 resource "aws_eks_node_group" "cluster" {
 
   for_each = var.node_group
@@ -7,7 +22,9 @@ resource "aws_eks_node_group" "cluster" {
   node_role_arn   = aws_iam_role.node_group.arn
 
   subnet_ids = [
-    aws_subnet.private[*].ids
+    aws_subnet.private[0].id,
+    aws_subnet.private[1].id,
+    aws_subnet.private[2].id
   ]
 
   instance_types = var.node_group[each.key].instance_types
@@ -18,9 +35,12 @@ resource "aws_eks_node_group" "cluster" {
     min_size     = var.node_group[each.key].min_size
   }
 
+  remote_access {
+    ec2_ssh_key = aws_key_pair.generated_key.key_name
+  }
+
   tags = {
-    "kubernetes.io/cluster/${var.cluster_name}"     = "owned",
-    "k8s.io/cluster-autoscaler/${var.cluster_name}" = "owned"
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
 
 
@@ -29,8 +49,10 @@ resource "aws_eks_node_group" "cluster" {
   ]
 
   timeouts {
-    create = "60m"
-    update = "2h"
-    delete = "2h"
+    create = "10m"
+    update = "1h"
+    delete = "1h"
   }
 }
+
+// TODO  https://github.com/miqdigital/terraform-aws-eks-cluster/tree/master continuar daqui, os node ainda não estão conectando - usar exemplo do github pra tentar configurar isso
