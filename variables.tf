@@ -34,3 +34,8 @@ variable "node_group" {
   }))
   description = "Defntion for the node groups"
 }
+
+variable "cluster_version" {
+  type        = string
+  description = "Version of Kubernetes"
+}

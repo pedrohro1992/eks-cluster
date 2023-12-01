@@ -11,6 +11,13 @@ resource "aws_subnet" "public" {
   }
 }
 
+resource "aws_route_table_association" "public_1a" {
+  count          = length(local.azs)
+  subnet_id      = aws_subnet.public[count.index].id
+  route_table_id = aws_route_table.igw_route_table.id
+}
+
+
 resource "aws_subnet" "private" {
   count      = length(local.azs)
   vpc_id     = aws_vpc.cluster_vpc.id
@@ -23,4 +30,10 @@ resource "aws_subnet" "private" {
     "kubernetes.io/cluster/${var.cluster_name}" = "shared"
 
   }
+}
+
+resource "aws_route_table_association" "private" {
+  count          = length(local.azs)
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.nat.id
 }
