@@ -16,7 +16,7 @@ private_subnets = [
 
 node_group = {
   "ng1" = {
-    instance_types = ["t2.micro"]
+    instance_types = ["t3.large"]
     desired_size   = 2
     max_size       = 2
     min_size       = 2
