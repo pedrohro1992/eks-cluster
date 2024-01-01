@@ -24,3 +24,4 @@ resource "aws_eks_cluster" "cluster" {
   ]
 }
 
+
