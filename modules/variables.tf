@@ -3,27 +3,13 @@ variable "cluster_name" {
   type        = string
   description = "Name of the cluster"
 }
-## Network variables 
 
-variable "vpc_cidr" {
+variable "vpc_name" {
   type        = string
-  description = "CIDR Block to put on the vpc"
-}
-
-
-
-variable "public_subnets" {
-  type        = list(string)
-  description = "CIDR Block to put on the public subnets"
-}
-
-variable "private_subnets" {
-  type        = list(string)
-  description = "CIDR to put on the private subnetes"
+  description = "Name of vpc witch the cluster will be deployed"
 }
 
 ## Eks cluster variables 
-
 
 variable "node_group" {
   type = map(object({
@@ -38,4 +24,22 @@ variable "node_group" {
 variable "cluster_version" {
   type        = string
   description = "Version of Kubernetes"
+}
+
+# Ingress controller variable
+
+variable "enable_ingress" {
+  type        = bool
+  description = "Deploy the ingress controller. Defaults to false"
+  default     = false
+}
+
+variable "ingress_controller_version" {
+  type        = string
+  description = "Set the version of helm chart"
+}
+
+variable "ingress_controller_values" {
+  type    = map(any)
+  default = {}
 }

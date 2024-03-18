@@ -22,9 +22,9 @@ resource "aws_eks_node_group" "cluster" {
   node_role_arn   = aws_iam_role.node_group.arn
 
   subnet_ids = [
-    aws_subnet.private[0].id,
-    aws_subnet.private[1].id,
-    aws_subnet.private[2].id
+    data.aws_subnet.private[0].id,
+    data.aws_subnet.private[1].id,
+    data.aws_subnet.private[2].id
   ]
 
   instance_types = var.node_group[each.key].instance_types
@@ -44,9 +44,9 @@ resource "aws_eks_node_group" "cluster" {
   }
 
 
-  depends_on = [
-    kubernetes_config_map.aws-auth
-  ]
+  # depends_on = [
+  #   kubernetes_config_map.aws-auth
+  # ]
 
   timeouts {
     create = "10m"

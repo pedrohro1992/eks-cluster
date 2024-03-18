@@ -1,7 +1,7 @@
 resource "aws_security_group" "nodes_sg" {
   name        = "eks-worker-node"
   description = "Security group for all nodes in the cluster"
-  vpc_id      = aws_vpc.cluster_vpc.id
+  vpc_id      = data.aws_vpc.this.id
 
   egress {
     from_port   = 0

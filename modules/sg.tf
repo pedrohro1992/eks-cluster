@@ -1,7 +1,7 @@
 // Control Plane Segurity Group
 resource "aws_security_group" "cluster_sg" {
   name   = "${var.cluster_name}-sg"
-  vpc_id = aws_vpc.cluster_vpc.id
+  vpc_id = data.aws_vpc.this.id
 
   egress {
     from_port = 0
@@ -18,10 +18,10 @@ resource "aws_security_group" "cluster_sg" {
 }
 
 resource "aws_security_group_rule" "cluster_ingress_https" {
-  cidr_blocks = ["0.0.0.0/0"]
-  from_port   = 443
-  to_port     = 443
-  protocol    = "tcp"
+  source_security_group_id = data.aws_security_group.wireguard_vpn_sg.id
+  from_port                = 443
+  to_port                  = 443
+  protocol                 = "tcp"
 
   security_group_id = aws_security_group.cluster_sg.id
   type              = "ingress"
