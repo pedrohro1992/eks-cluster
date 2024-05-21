@@ -20,12 +20,21 @@ module "eks-cluster" {
 
   ingress_controller_version = "4.5.2"
 
-  # Nao to conseguindo usar essa disgracaaaaaaaa
-  # ingress_controlle
-  #   "teste" = {
-  #     name  = null
-  #     value = null
-  #     type  = null
-  #   }
-  # }
+  ingress_helm_namespace = "ingress-argocd"
+
+  additional_set = [
+    # {
+    #   name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-type"
+    #   value = "nlb"
+    #   type  = "string"
+    # },
+    {
+      name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/aws-load-balancer-cross-zone-load-balancing-enabled"
+      value = "true"
+      type  = "string"
+    },
+  ]
+
+  r53_public_zone_domain = "cacetinho.app.br"
+
 }

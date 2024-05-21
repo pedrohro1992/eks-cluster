@@ -26,12 +26,17 @@ variable "cluster_version" {
   description = "Version of Kubernetes"
 }
 
-# Ingress controller variable
+# Ingress controller variables
 
 variable "enable_ingress" {
   type        = bool
   description = "Deploy the ingress controller. Defaults to false"
   default     = false
+}
+
+variable "ingress_helm_namespace" {
+  type        = string
+  description = "Set the ingress helm release namespace"
 }
 
 variable "ingress_controller_version" {
@@ -42,4 +47,15 @@ variable "ingress_controller_version" {
 variable "ingress_controller_values" {
   type    = map(any)
   default = {}
+}
+
+variable "additional_set" {
+  description = "Optional set for additional helm settings"
+  default     = []
+}
+
+# Route 53 Variables
+
+variable "r53_public_zone_domain" {
+  description = "Domain of the private route53 zone"
 }
