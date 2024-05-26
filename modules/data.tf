@@ -18,7 +18,7 @@ data "aws_vpc" "this" {
 
 data "aws_security_group" "wireguard_vpn_sg" {
   tags = {
-    Application = "wireguard"
+    Application = "pivpn"
   }
 }
 
