@@ -22,6 +22,11 @@ data "aws_security_group" "wireguard_vpn_sg" {
   }
 }
 
+data "aws_route53_zone" "public" {
+  name         = var.public_zone
+  private_zone = false
+}
+
 data "aws_subnet" "public" {
   // Gambiarra pra poder usar o data source pra uma subnet
   count = length(local.azs)
@@ -30,6 +35,7 @@ data "aws_subnet" "public" {
     values = [data.aws_vpc.this.id]
   }
   tags = {
+    #TODO To usando essa parada em dois lugar, compensa mover pro locals
     Name = "${var.vpc_name}-public-${local.azs[count.index]}"
   }
 }
@@ -42,6 +48,7 @@ data "aws_subnet" "private" {
     values = [data.aws_vpc.this.id]
   }
   tags = {
+    #TODO To usando essa parada em dois lugar, compensa mover pro locals
     Name = "${var.vpc_name}-public-${local.azs[count.index]}"
   }
 }

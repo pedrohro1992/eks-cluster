@@ -9,6 +9,16 @@ variable "vpc_name" {
   description = "Name of vpc witch the cluster will be deployed"
 }
 
+variable "public_zone" {
+  type        = string
+  description = "Public Zone with the cluster will be access from the internet"
+}
+
+variable "cluster_region" {
+  type        = string
+  description = "Region that the eks cluster will be deployed"
+}
+
 ## Eks cluster variables 
 
 variable "node_group" {
@@ -39,7 +49,21 @@ variable "ingress_controller_version" {
   description = "Set the version of helm chart"
 }
 
+#TODO: Nao sei se isso ta funcionando
 variable "ingress_controller_values" {
   type    = map(any)
   default = {}
 }
+
+// External DNS Values
+variable "external_dns_release_name" {
+  type        = string
+  description = "Set the external_dns release name for the external DNS install"
+}
+
+variable "external_dns_release_version" {
+  type        = string
+  description = "Set the service account name that will be used by the external dns operator"
+}
+
+

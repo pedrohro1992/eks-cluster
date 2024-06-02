@@ -1,7 +1,9 @@
-resource "helm_release" "argocd_ingress" {
-  count            = var.enable_ingress ? 1 : 0
+resource "helm_release" "gitops_ingress" {
+  #Remover quando a instalacao tiver configurada
+  count = var.enable_ingress ? 1 : 0
+  #
   name             = var.cluster_name
-  namespace        = "ingress-argocd"
+  namespace        = "ingress-gitops"
   create_namespace = true
   chart            = "ingress-nginx"
   repository       = "https://kubernetes.github.io/ingress-nginx"

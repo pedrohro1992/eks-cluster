@@ -1,10 +1,16 @@
 module "eks-cluster" {
   source = "../modules"
 
+  //TODO:Bolar um nome melhor pro cluster, os recurso ta ficando com os nome tudo cagado
   cluster_name = "cacetinho-sa-eks"
+
+  cluster_region = "us-east-1"
 
   vpc_name = "cacetinho-empresa-us-east-1"
 
+  cluster_version = "1.29"
+
+  public_zone = "cacetinho.app.br"
 
   node_group = {
     "ng1" = {
@@ -20,18 +26,19 @@ module "eks-cluster" {
       min_size       = 1
     }
   }
-  cluster_version = "1.29"
 
-  enable_ingress = false
+  #====================================================================================== #
+
+  //Nginx Ingress Operator Values
+  enable_ingress = true
 
   ingress_controller_version = "4.5.2"
 
-  # Nao to conseguindo usar essa disgracaaaaaaaa
-  # ingress_controlle
-  #   "teste" = {
-  #     name  = null
-  #     value = null
-  #     type  = null
-  #   }
-  # }
+  #====================================================================================== #
+
+  //External DNS Values
+  external_dns_release_name = "external-dns"
+
+  external_dns_release_version = "1.14.4"
+
 }
