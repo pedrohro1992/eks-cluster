@@ -41,4 +41,17 @@ module "eks-cluster" {
 
   external_dns_release_version = "1.14.4"
 
+  #====================================================================================== #
+
+  //Cert Manager Values
+  cert_manager_enable = true
+
+  cert_manger_release_name = "cert-manager"
+
+  cert_manager_release_version = "1.14.5"
+
+  #====================================================================================== #
+
+  //Cert Manager Values
+  lbc_release_name = ""
 }

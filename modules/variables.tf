@@ -36,8 +36,14 @@ variable "cluster_version" {
   description = "Version of Kubernetes"
 }
 
-# Ingress controller variable
+variable "lbc_release_name" {
+  type        = string
+  description = "Set tne name of AWS LOad Balance Controller helm release"
+}
 
+// AWS Load Balance Controller Values
+
+// Ingress Controller Values
 variable "enable_ingress" {
   type        = bool
   description = "Deploy the ingress controller. Defaults to false"
@@ -49,21 +55,28 @@ variable "ingress_controller_version" {
   description = "Set the version of helm chart"
 }
 
-#TODO: Nao sei se isso ta funcionando
-variable "ingress_controller_values" {
-  type    = map(any)
-  default = {}
-}
-
 // External DNS Values
 variable "external_dns_release_name" {
   type        = string
-  description = "Set the external_dns release name for the external DNS install"
+  description = "Set the name of external dns helm release"
 }
 
 variable "external_dns_release_version" {
   type        = string
-  description = "Set the service account name that will be used by the external dns operator"
+  description = "Set the release version for external dns helm chart"
 }
 
+// Cert Manager Values
+variable "cert_manager_enable" {
+  type = bool
+}
 
+variable "cert_manger_release_name" {
+  type        = string
+  description = "Set the name of Cert Manager helm release"
+}
+
+variable "cert_manager_release_version" {
+  type        = string
+  description = "Set the release version for cert-manager helm chart"
+}
