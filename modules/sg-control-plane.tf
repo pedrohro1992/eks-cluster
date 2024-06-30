@@ -1,3 +1,4 @@
+//TODO Adicionar security group por pod no cluster https://medium.com/@seifeddinerajhi/aws-eks-security-groups-per-pod-improve-the-security-of-your-kubernetes-clusters-a23a961793dc
 // Control Plane Segurity Group
 resource "aws_security_group" "cluster_sg" {
   name   = "${var.cluster_name}-sg"
