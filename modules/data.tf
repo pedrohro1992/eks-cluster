@@ -16,43 +16,39 @@ data "aws_vpc" "this" {
   }
 }
 
-//TODO Remover referencias a wireguard vpn
 data "aws_security_group" "wireguard_vpn_sg" {
   tags = {
-    Application = "wireguard"
+    Application = "pivpn"
   }
 }
-# data "aws_route53_zone" "public" {
-#   name         = var.r53_public_zone_domain
-#   private_zone = false
-# }
-#
-# data "aws_lb" "argocd_ingress" {
-#   tags = {
-#     #Namespace + release name + ingress-nginx-ingress-controller
-#     "load-balance-name" = "argocd-${var.cluster_name}"
-#   }
-#   depends_on = [helm_release.argocd_ingress]
-# }
-#
+
+data "aws_route53_zone" "public" {
+  name         = var.public_zone
+  private_zone = false
+}
+
 data "aws_subnet" "public" {
+  // Gambiarra pra poder usar o data source pra uma subnet
   count = length(local.azs)
   filter {
     name   = "vpc-id"
     values = [data.aws_vpc.this.id]
   }
   tags = {
+    #TODO To usando essa parada em dois lugar, compensa mover pro locals
     Name = "${var.vpc_name}-public-${local.azs[count.index]}"
   }
 }
 
 data "aws_subnet" "private" {
+  // Gambiarra pra poder usar o data source pra uma subnet
   count = length(local.azs)
   filter {
     name   = "vpc-id"
     values = [data.aws_vpc.this.id]
   }
   tags = {
+    #TODO To usando essa parada em dois lugar, compensa mover pro locals
     Name = "${var.vpc_name}-public-${local.azs[count.index]}"
   }
 }

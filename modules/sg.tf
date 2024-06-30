@@ -14,6 +14,7 @@ resource "aws_security_group" "cluster_sg" {
   tags = {
     Name = "${var.cluster_name}-sg"
   }
+
 }
 
 resource "aws_security_group_rule" "cluster_ingress_https" {

@@ -9,6 +9,16 @@ variable "vpc_name" {
   description = "Name of vpc witch the cluster will be deployed"
 }
 
+variable "public_zone" {
+  type        = string
+  description = "Public Zone with the cluster will be access from the internet"
+}
+
+variable "cluster_region" {
+  type        = string
+  description = "Region that the eks cluster will be deployed"
+}
+
 ## Eks cluster variables 
 
 variable "node_group" {
@@ -26,17 +36,18 @@ variable "cluster_version" {
   description = "Version of Kubernetes"
 }
 
-# Ingress controller variables
+variable "lbc_release_name" {
+  type        = string
+  description = "Set tne name of AWS LOad Balance Controller helm release"
+}
 
+// AWS Load Balance Controller Values
+
+// Ingress Controller Values
 variable "enable_ingress" {
   type        = bool
   description = "Deploy the ingress controller. Defaults to false"
   default     = false
-}
-
-variable "ingress_helm_namespace" {
-  type        = string
-  description = "Set the ingress helm release namespace"
 }
 
 variable "ingress_controller_version" {
@@ -44,18 +55,28 @@ variable "ingress_controller_version" {
   description = "Set the version of helm chart"
 }
 
-variable "ingress_controller_values" {
-  type    = map(any)
-  default = {}
+// External DNS Values
+variable "external_dns_release_name" {
+  type        = string
+  description = "Set the name of external dns helm release"
 }
 
-variable "additional_set" {
-  description = "Optional set for additional helm settings"
-  default     = []
+variable "external_dns_release_version" {
+  type        = string
+  description = "Set the release version for external dns helm chart"
 }
 
-# Route 53 Variables
+// Cert Manager Values
+variable "cert_manager_enable" {
+  type = bool
+}
 
-variable "r53_public_zone_domain" {
-  description = "Domain of the private route53 zone"
+variable "cert_manger_release_name" {
+  type        = string
+  description = "Set the name of Cert Manager helm release"
+}
+
+variable "cert_manager_release_version" {
+  type        = string
+  description = "Set the release version for cert-manager helm chart"
 }
